@@ -59,7 +59,7 @@
 			<action name="loginlocal"
 				class="dk.schneiderelectric.dcimteam.auth0.impl.LoginLocal" method="doDefault">
 				<interceptor-ref name="validatingStack" />
-				<result name="input" type="velocity">/templates/loginLocalb.vm</result>
+				<result name="input" type="velocity">/templates/loginLocal.vm</result>
 			</action>
 			<action name="dologinlocal"
 				class="dk.schneiderelectric.dcimteam.auth0.impl.LoginLocal">
