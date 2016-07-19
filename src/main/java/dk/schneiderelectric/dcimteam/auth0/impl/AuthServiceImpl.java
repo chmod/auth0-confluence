@@ -16,7 +16,6 @@ import com.auth0.Auth0User;
 import com.atlassian.user.Group;
 import bucket.user.LicensingException;
 import dk.schneiderelectric.dcimteam.auth0.api.AuthService;
-import dk.schneiderelectric.dcimteam.struxureontheme.api.services.SOThemeService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -54,18 +53,14 @@ public class AuthServiceImpl extends ConfluenceAuthenticator implements AuthServ
 	private final EventPublisher eventPublisher;
 	@ComponentImport
 	private final GroupManager groupManager;
-	@ComponentImport
-	private final SOThemeService soThemeService;
 	@Inject
 	public AuthServiceImpl(final UserAccessor userAccessor, TransactionTemplate transactionTemplate,
-			LoginManager loginManager,EventPublisher eventPublisher,GroupManager groupManager,SOThemeService soThemeService) {
+			LoginManager loginManager,EventPublisher eventPublisher,GroupManager groupManager) {
 		this.userAccessor = userAccessor;
 		this.transactionTemplate = transactionTemplate;
 		this.eventPublisher=eventPublisher;
 		this.loginManager=loginManager;
 		this.groupManager=groupManager;
-		this.soThemeService=soThemeService;
-		soThemeService.createUser("AAA", "BBB", "CCC");
 	}
 
 	@Override
