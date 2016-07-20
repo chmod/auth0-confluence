@@ -1,0 +1,33 @@
+<head>
+	<title>Auth0 Configuration</title>
+	<meta name="decorator" content="atl.admin">
+</head>
+<body>
+	<form method="POST" action="/admin/auth0/config.action">
+		<div class="form-group">
+			<label for="domain">Domain</label>
+			<input type="text" class="form-control" id="domain" name="domain" placeholder="from auth0 manage console" value="$!domain">
+		</div>
+		<div class="form-group">
+			<label for="clientID">Client ID</label>
+			<input type="text" class="form-control" id="clientID" name="clientID" placeholder="from auth0 manage console" value="$!clientID">
+		</div>
+		<div class="form-group">
+			<label for="clientSecret">Client Secret</label>
+			<input type="text" class="form-control" id="clientSecret" name="clientSecret" placeholder="from auth0 manage console" value="$!clientSecret">
+		</div>
+		<div class="form-group">
+			<label for="callbackUrl">Callback URL</label>
+			<input type="text" class="form-control" id="callbackUrl" name="callbackUrl" placeholder="Relative to base url" value="$!callbackUrl">
+		</div>
+		<div class="form-group">
+			<label for="redirectSuccess">Redirect on Success</label>
+			<input type="text" class="form-control" id="redirectSuccess" name="redirectSuccess" placeholder="Relative to base url" value="$!redirectSuccess">
+		</div>
+		<div class="form-group">
+			<label for="redirectError">Redirect on Error</label>
+			<input type="text" class="form-control" id="redirectError" name="redirectError" placeholder="Relative to base url" value="$!redirectError">
+		</div>
+		<button type="submit" class="btn btn-default">Submit</button>
+	</form>
+</body>

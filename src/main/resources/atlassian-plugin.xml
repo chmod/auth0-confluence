@@ -37,8 +37,9 @@
 	<!-- Servlet Configuration -->
 	<servlet name="Auth0" i18n-name-key="auth.name" key="auth"
 		class="dk.schneiderelectric.dcimteam.servlet.LoginServletCallback">
-		<description>Auth0 test servlet</description>
+		<description>Auth0 servlet</description>
 		<url-pattern>/callback</url-pattern>
+		<!-- TODO: Read those two from bandana -->
 		<init-param>
 			<param-name>auth0.redirect_on_success</param-name>
 			<param-value>/</param-value>
@@ -49,32 +50,51 @@
 		</init-param>
 	</servlet>
 
-	<xwork name="Login Override Action" key="loginOverride">
+	<xwork name="Auth0 Actions" key="auth0Actions">
 		<package name="loginDefault" extends="default">
 			<interceptor-ref name="defaultStack" />
 			<action name="login"
-				class="dk.schneiderelectric.dcimteam.auth0.impl.LoginPresenter">
+				class="dk.schneiderelectric.dcimteam.auth0.impl.action.LoginPresenter">
 				<result name="success" type="velocity">/templates/loginView.vm</result>
+				<result name="noauth0" type="dispatcher">/loginlocacl.action</result>
 			</action>
 			<action name="loginlocal"
-				class="dk.schneiderelectric.dcimteam.auth0.impl.LoginLocal" method="doDefault">
+				class="dk.schneiderelectric.dcimteam.auth0.impl.action.LoginLocal"
+				method="doDefault">
 				<interceptor-ref name="validatingStack" />
 				<result name="input" type="velocity">/templates/loginLocal.vm</result>
 			</action>
 			<action name="dologinlocal"
-				class="dk.schneiderelectric.dcimteam.auth0.impl.LoginLocal">
+				class="dk.schneiderelectric.dcimteam.auth0.impl.action.LoginLocal">
 				<interceptor-ref name="validatingStack" />
 				<result name="input" type="velocity">/templates/loginLocal.vm</result>
 				<result name="error" type="velocity">/templates/loginLocal.vm</result>
 				<result name="success" type="velocity">/templates/loginLocal.vm</result>
 			</action>
 		</package>
+		<package name="auth0Admin" extends="default" namespace="/admin/auth0">
+			<default-interceptor-ref name="defaultStack"/>
+			<action name="config"
+				class="dk.schneiderelectric.dcimteam.auth0.impl.action.admin.Configure">
+				<result name="success" type="velocity">/templates/admin/config.vm
+				</result>
+			</action>
+		</package>
 	</xwork>
 
 	<routing key="${project.artifactId}-routes" path="/auth0">
 		<route from="/login" to="/auth/login.action" />
-		<!-- <route from="/callback" to="/devices/overview.action" /> -->
 	</routing>
 
+	<!-- ADMIN PANEL -->
+	<web-section key="auth0.admin.section" name="Administration Section"
+		location="system.admin" weight="110">
+		<label key="Auth0 Settings" />
+	</web-section>
 
+	<web-item key="cq.admin.configuration" name="Configuration web item"
+		section="system.admin/auth0.admin.section" weight="10">
+		<label key="Configuration" />
+		<link linkId="auth0-config">/admin/auth0/config.action</link>
+	</web-item>
 </atlassian-plugin>

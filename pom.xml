@@ -3,13 +3,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>dk.schneiderelectric.dcimteam</groupId>
+	<parent>
+		<groupId>dk.schneiderelectric.dcimteam</groupId>
+		<artifactId>parent-pom</artifactId>
+		<version>1.0</version>
+	</parent>
 	<artifactId>auth0</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<organization>
-		<name>Example Company</name>
-		<url>http://www.example.com/</url>
-	</organization>
+
 	<name>auth0</name>
 	<description>This is the dk.schneiderelectric.dcimteam:auth0 plugin for Atlassian Confluence.</description>
 	<packaging>atlassian-plugin</packaging>
@@ -91,12 +92,6 @@
 			<version>1.8.5</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.4</version>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -117,8 +112,11 @@
 						<!-- Add package to export here -->
 						<Export-Package>dk.schneiderelectric.dcimteam.auth0.api.*,</Export-Package>
 						<!-- Add package import here -->
-						<Import-Package>org.springframework.osgi.*;resolution:="optional",
-							org.eclipse.gemini.blueprint.*;resolution:="optional", *</Import-Package>
+						<Import-Package>
+							com.atlassian.confluence.*;resolution:="optional",
+							org.springframework.osgi.*;resolution:="optional",
+							org.eclipse.gemini.blueprint.*;resolution:="optional",
+							*</Import-Package>
 						<!-- Ensure plugin is spring powered -->
 						<Spring-Context>*</Spring-Context>
 					</instructions>

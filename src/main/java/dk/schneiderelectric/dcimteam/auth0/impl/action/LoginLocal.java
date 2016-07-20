@@ -1,4 +1,4 @@
-package dk.schneiderelectric.dcimteam.auth0.impl;
+package dk.schneiderelectric.dcimteam.auth0.impl.action;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,12 +10,10 @@ public class LoginLocal extends LoginAction {
 	private static final Logger log = LoggerFactory.getLogger(LoginLocal.class);
 	@Override
 	public String doDefault() throws Exception {
-		log.info("doDefault");
 		return super.doDefault();
 	}
 	@Override
 	public String execute() throws Exception {
-		log.info("execute");
 		return super.execute();
 	}
 }
