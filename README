@@ -1,4 +1,4 @@
-This plugin comes with NO GUARANTEE and is not thoroughly test. It is only used for demoing communication between auth0 and confluence.
+This plugin comes with NO GUARANTEE and is not thoroughly tested. It is only used for demoing communication between auth0 and confluence.
 Should you use it, be sure to read both auth0 and confluence documentation and test it in a dev environment prior deploying to production.
 
 In the admin panel of Confluence, change parameters according to your need.
