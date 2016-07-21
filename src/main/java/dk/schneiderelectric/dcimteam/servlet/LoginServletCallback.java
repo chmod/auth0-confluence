@@ -1,6 +1,5 @@
 package dk.schneiderelectric.dcimteam.servlet;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.atlassian.plugin.spring.scanner.annotation.component.Scanned;
@@ -20,11 +19,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static java.util.Arrays.asList;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.Properties;
 
 @Scanned
 public class LoginServletCallback extends HttpServlet {

@@ -19,35 +19,12 @@
 		<resource type="download" name="images/" location="/images" />
 		<context>auth0-base-resources</context>
 	</web-resource>
-	<!-- Auth0 Configuration -->
-	<servlet-context-param key="auth-domain">
-		<param-name>auth0.domain</param-name>
-		<param-value>sxwdc-non-prod.auth0.com</param-value>
-	</servlet-context-param>
-	<servlet-context-param key="auth-client_id">
-		<param-name>auth0.client_id</param-name>
-		<param-value>15eNGTm5Y5ZQNzuSDbWVNrpGpdDEWwvn</param-value>
-	</servlet-context-param>
-	<servlet-context-param key="auth-client_secret">
-		<param-name>auth0.client_secret</param-name>
-		<param-value>poxYjy4eLFUmHkjiNUoz5VKPialBDuYcwZhTTGHyC7jS7srN_S0mTKq6BjZ03HsF
-		</param-value>
-	</servlet-context-param>
 
-	<!-- Servlet Configuration -->
+	<!-- Callback Servlet Configuration -->
 	<servlet name="Auth0" i18n-name-key="auth.name" key="auth"
 		class="dk.schneiderelectric.dcimteam.servlet.LoginServletCallback">
 		<description>Auth0 servlet</description>
 		<url-pattern>/callback</url-pattern>
-		<!-- TODO: Read those two from bandana -->
-		<init-param>
-			<param-name>auth0.redirect_on_success</param-name>
-			<param-value>/</param-value>
-		</init-param>
-		<init-param>
-			<param-name>auth0.redirect_on_error</param-name>
-			<param-value>/plugins/servlet/login</param-value>
-		</init-param>
 	</servlet>
 
 	<xwork name="Auth0 Actions" key="auth0Actions">
@@ -56,7 +33,7 @@
 			<action name="login"
 				class="dk.schneiderelectric.dcimteam.auth0.impl.action.LoginPresenter">
 				<result name="success" type="velocity">/templates/loginView.vm</result>
-				<result name="noauth0" type="dispatcher">/loginlocacl.action</result>
+				<result name="noauth0" type="dispatcher">/loginlocal.action</result>
 			</action>
 			<action name="loginlocal"
 				class="dk.schneiderelectric.dcimteam.auth0.impl.action.LoginLocal"
@@ -65,7 +42,8 @@
 				<result name="input" type="velocity">/templates/loginLocal.vm</result>
 			</action>
 			<action name="dologinlocal"
-				class="dk.schneiderelectric.dcimteam.auth0.impl.action.LoginLocal">
+				class="dk.schneiderelectric.dcimteam.auth0.impl.action.LoginLocal"
+				method="execute">
 				<interceptor-ref name="validatingStack" />
 				<result name="input" type="velocity">/templates/loginLocal.vm</result>
 				<result name="error" type="velocity">/templates/loginLocal.vm</result>
