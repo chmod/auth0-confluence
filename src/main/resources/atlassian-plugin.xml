@@ -60,10 +60,6 @@
 		</package>
 	</xwork>
 
-	<routing key="${project.artifactId}-routes" path="/auth0">
-		<route from="/login" to="/auth/login.action" />
-	</routing>
-
 	<!-- ADMIN PANEL -->
 	<web-section key="auth0.admin.section" name="Administration Section"
 		location="system.admin" weight="110">
