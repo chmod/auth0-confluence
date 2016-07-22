@@ -2,7 +2,7 @@
 package dk.schneiderelectric.dcimteam.auth0.api;
 
 import java.util.Optional;
-
+import com.atlassian.confluence.user.ConfluenceUser;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.auth0.Auth0User;
@@ -28,7 +28,7 @@ public interface AuthService {
      * @param emailAddress
      *            the email address
      */
-    void createUser(final String username, final String fullName, final String emailAddress);
+    Optional<ConfluenceUser> createUser(final String username, final String fullName, final String emailAddress);
 
     /**
      * Authenticates the user
