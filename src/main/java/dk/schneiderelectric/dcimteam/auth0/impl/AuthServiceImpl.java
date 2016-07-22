@@ -78,29 +78,31 @@ public class AuthServiceImpl extends ConfluenceAuthenticator implements AuthServ
 	}
 
 	@Override
-	public void createUser(final String username, final String fullName, final String emailAddress) {
+	public Optional<ConfluenceUser> createUser(final String username, final String fullName, final String emailAddress) {
 		if (username != null && fullName != null && emailAddress != null) {
-			transactionTemplate.execute(new TransactionCallback<Void>() {
+			return transactionTemplate.execute(new TransactionCallback<Optional<ConfluenceUser>>() {
 				@Override
-				public Void doInTransaction() {
+				public Optional<ConfluenceUser> doInTransaction() {
 					try {
 						ConfluenceUser newlyCreatedUser = userAccessor
 								.createUser(new DefaultUser(username, fullName, emailAddress), Credential.NONE);
 						Group defaultGroup = groupManager.getGroup("confluence-users");
 						groupManager.addMembership(defaultGroup, newlyCreatedUser);
+						return Optional.of(newlyCreatedUser);
 					} catch (LicensingException le) {
 						log.error("Cannot create user '" + username + "'!", le);
 						throw le;
 					} catch (Throwable t) {
 						log.error("Failed to create user '" + username + "'!", t);
 					}
-					return null;
+					return Optional.empty();
 				}
 			});
 		} else {
 			if (log.isDebugEnabled())
 				log.debug("Got a null at either username:" + username + " or fullName:" + fullName
 						+ " or email address:" + emailAddress);
+			return Optional.empty();
 		}
 	}
 
@@ -123,6 +125,19 @@ public class AuthServiceImpl extends ConfluenceAuthenticator implements AuthServ
 			}
 		}
 	}
+
+	private void login(ConfluenceUser user, HttpServletRequest request, HttpServletResponse response) {
+		try {
+	    		String remoteIP = request.getRemoteAddr();
+	    		String remoteHost = request.getRemoteHost();
+	    		putPrincipalInSessionContext(request, user);
+	    		loginManager.onSuccessfulLoginAttempt(user.getName(), request);
+	    		eventPublisher.publish(new LoginEvent(this, user.getName(), request.getSession().getId(), remoteHost,remoteIP, LoginEvent.UNKNOWN));
+			LoginReason.OK.stampRequestResponse(request, response);
+		} catch (NullPointerException npe) {
+	    		npe.printStackTrace();
+		}
+    }
 
 	private ConfluenceUser getUserByUsername(String username) {
 		return userAccessor.getUserByName(username);
